@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Attendance System</title>
+</head>
+<body>
+  <h2>Register Student</h2>
+  <form id="registerForm">
+    <input placeholder="ID Number" name="id_number" required>
+    <input placeholder="Name" name="name" required>
+    <input placeholder="Email" name="email" required>
+    <button type="submit">Register</button>
+  </form>
+
+  <h2>Time In / Time Out</h2>
+  <form id="attendanceForm">
+    <input placeholder="ID Number" name="id_number" required>
+    <button type="submit">Submit</button>
+  </form>
+  <p>Enter your ID number to time in. Enter again to time out.</p>
+
+  <script>
+    document.getElementById('registerForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      const res = await fetch('http://localhost:3000/api/students/register', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+      alert(await res.text());
+    };
+
+    document.getElementById('attendanceForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+
+      const res = await fetch('http://localhost:3000/api/attendance/mark', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+      alert(await res.text());
+    };
+  </script>
+</body>
+</html>
