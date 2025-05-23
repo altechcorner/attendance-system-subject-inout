@@ -4,7 +4,7 @@ Attendance Monitoring System
 
 ## Description
 
-This project will allow student to time-in and time-out in the subject of a specific teacher
+This project will allow students to time-in and time-out with the duration of 1 minute in receiving an email and multiple times in one day.
 
 ## Getting Started
 
@@ -59,11 +59,11 @@ Inspiration, code snippets, etc.
 
 
 ## Quick Notes
-# In the project root
-rm -rf node_modules package-lock.json
-npm install
+In the project root
+* rm -rf node_modules package-lock.json
+* npm install
 
-# In the backend directory
-cd backend
-rm -rf node_modules package-lock.json
-npm install
+In the backend directory
+* cd backend
+* rm -rf node_modules package-lock.json
+* npm install
