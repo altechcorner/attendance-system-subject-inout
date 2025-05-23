@@ -16,3 +16,14 @@ CREATE TABLE attendance (
   time_out DATETIME,
   FOREIGN KEY (student_id) REFERENCES students(id)
 );
+
+
+CREATE TABLE pending_emails (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  to_email VARCHAR(255) NOT NULL,
+  subject VARCHAR(255) NOT NULL,
+  message TEXT NOT NULL,
+  html_message TEXT,
+  send_at DATETIME NOT NULL,
+  sent TINYINT(1) DEFAULT 0
+);

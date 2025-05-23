@@ -4,6 +4,7 @@ const cors = require('cors');
 
 const studentRoutes = require('./routes/students');
 const attendanceRoutes = require('./routes/attendance');
+require('./emailCron');
 
 app.use(cors());
 app.use(express.json());

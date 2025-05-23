@@ -56,3 +56,14 @@ Inspiration, code snippets, etc.
 * AI
 * youtube
 * github
+
+
+## Quick Notes
+# In the project root
+rm -rf node_modules package-lock.json
+npm install
+
+# In the backend directory
+cd backend
+rm -rf node_modules package-lock.json
+npm install

@@ -32,12 +32,16 @@ router.post('/mark', async (req, res) => {
               const subject = `Time In Notification for ${student.name}`;
               const message = `Hello ${student.name},\n\nYou have timed IN at ${now.toLocaleString()}.\n\nIf this wasn't you, contact admin.`;
               const htmlMessage = `<p>Hello ${student.name},</p><p>You have <b>timed IN</b> at <b>${now.toLocaleString()}</b>.</p>`;
-              try {
-                await sendEmail(student.email, subject, message, htmlMessage);
-                res.send('Time IN recorded and email sent.');
-              } catch (e) {
-                res.status(500).send('Time IN recorded but failed to send email.');
-              }
+              const sendAt = new Date(now.getTime() + 2 * 60000); // 2 minutes later
+
+              db.query(
+                'INSERT INTO pending_emails (to_email, subject, message, html_message, send_at) VALUES (?, ?, ?, ?, ?)',
+                [student.email, subject, message, htmlMessage, sendAt],
+                (err) => {
+                  if (err) return res.status(500).send('Time IN recorded but failed to queue email.');
+                  res.send('Time IN recorded. Email will be sent in 2 minutes.');
+                }
+              );
             }
           );
         } else if (attendanceRows[0].time_out === null) {
@@ -51,12 +55,16 @@ router.post('/mark', async (req, res) => {
               const subject = `Time Out Notification for ${student.name}`;
               const message = `Hello ${student.name},\n\nYou have timed OUT at ${now.toLocaleString()}.\n\nIf this wasn't you, contact admin.`;
               const htmlMessage = `<p>Hello ${student.name},</p><p>You have <b>timed OUT</b> at <b>${now.toLocaleString()}</b>.</p>`;
-              try {
-                await sendEmail(student.email, subject, message, htmlMessage);
-                res.send('Time OUT recorded and email sent.');
-              } catch (e) {
-                res.status(500).send('Time OUT recorded but failed to send email.');
-              }
+              const sendAt = new Date(now.getTime() + 2 * 60000); // 2 minutes later
+
+              db.query(
+                'INSERT INTO pending_emails (to_email, subject, message, html_message, send_at) VALUES (?, ?, ?, ?, ?)',
+                [student.email, subject, message, htmlMessage, sendAt],
+                (err) => {
+                  if (err) return res.status(500).send('Time OUT recorded but failed to queue email.');
+                  res.send('Time OUT recorded. Email will be sent in 2 minutes.');
+                }
+              );
             }
           );
         }
